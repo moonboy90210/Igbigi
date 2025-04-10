@@ -1,48 +1,211 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-</head>
-
-<body>
-
-</body>
-
-</html>
-
 <!doctype html>
 <html lang="en">
 
 <head>
-	<title>Title</title>
-	<!-- Required meta tags -->
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- Bootstrap CSS v5.2.1 -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
-		<link rel="stylesheet" href="index.css">
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<!-- CSS -->
+	<!-- <link rel="stylesheet" href="index2.css"> -->
+	<link rel="stylesheet" href="index.css">
+	<!-- font awesome kit -->
+	<script src="https://kit.fontawesome.com/0f977cd8f2.js" crossorigin="anonymous"></script>
+	<!-- browser logo -->
+	<link rel="icon" type="image/x-icon" href="img/logo 2.svg" sizes="400x400">
+	<title>Igbigi - Currency Converter</title>
 </head>
 
 <body>
 	<header>
 		<!-- place navbar here -->
-		<nav>
-
+		<nav class="navbar">
+			<div class="container">
+				<a class="navbar-brand" href="#home">
+					<img src="img/igbigi logo.svg" alt="Igbigi logo" srcset="Igbigi logo" width="120px" height="120px">
+				</a>
+				<div>
+					<ul class="navbar-nav">
+						<li class="nav-item btn btn-outline-light">
+							<a class="nav-link" href="http://">Download App</a>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</nav>
 	</header>
-	<main>
-		<div class="container">
 
+	<main>
+
+		<div id="converter-tablet" class="justify-content-center pb-5">
+			<div id="background" class="background text-center">
+				<div class="header-h2 pt-5 pb-3">
+					<h4><strong>CURRENCY CONVERTER</strong></h4>
+				</div>
+				<!--pills tab-->
+				<div class="container">
+					<div class="nav nav-tabs justify-content-center border-dark" id="pills-tab" role="tablist">
+						<li class="nav-link active" id="nav-fiat-tab" data-bs-toggle="tab" data-bs-target="#nav-fiat"
+							type="button" role="tab" aria-controls="nav-fiat" aria-selected="true">Fiat</li>
+						<li class="nav-link" id="nav-crypto-tab" data-bs-toggle="tab" data-bs-target="#nav-crypto"
+							type="button" role="tab" aria-controls="nav-crypto" aria-selected="false">Crypto</li>
+					</div>
+				</div>
+
+				<!-- fiat tab -->
+				<div class="tab-content pt-3" id="nav-tabContent">
+					<div class="tab-pane fade show active" id="nav-fiat" role="tabpanel" aria-labelledby="nav-fiat-tab"
+						tabindex="0">
+						<div class="container">
+
+							<form action="#">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="mt-2 mb-3 text-start amount">
+											<label for="inputAmount" class="form-label">Enter Amount</label>
+											<input type="text" class="form-control" id="inputAmount"
+												aria-describedby="inputAmount">
+											<div id="inputHelp" class="form-text">Price may vary according to market
+												cap.
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row justify-content-center drop-list">
+									<div class="col-sm-5 col-md-5 col-lg-5 mb-3 text-start from">
+										<label for="inputCurrencyFrom" class="form-label">From</label>
+										<div class="select-box">
+											<img src="https://flagsapi.com/US/flat/64.png" alt="flag">
+											<select class="select" aria-label="select">
+
+											</select>
+										</div>
+									</div>
+
+									<div class="col-sm-2 col-md-2 col-lg-2 pt-7 icon">
+										<i class="fa-solid fa-right-left"></i>
+									</div>
+
+									<div class="col-sm-5 col-md-5 col-lg-5 mb-3 text-start to">
+										<label for="inputCurrencyTo" class="form-label">To</label>
+										<div class="select-box">
+											<img src="https://flagsapi.com/NG/flat/64.png" alt="flag">
+											<select class="select" aria-label="select">
+
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="text-start my-3">
+										<label class="exchange-rate" for="textConvert">Getting exchange rate...</label>
+									</div>
+									<div class="col-sm-12">
+										<button type="submit" class="btn btn-dark mt-3">Get exchange rate</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+
+					<!-- Crypto tab -->
+					<div class="tab-pane fade" id="nav-crypto" role="tabpanel" aria-labelledby="nav-Crypto-tab"
+						tabindex="0">
+						<div class="container">
+							<form action="#">
+								<!-- <div class="text-start py-3">
+									<small>* Enter any crypto amount to Convert </small>
+								</div> -->
+
+								<div class="mt-2 mb-3 text-start">
+									<label for="inputAmount" class="form-label">Enter Amount</label>
+									<input type="text" class="form-control" id="inputAmount"
+										aria-describedby="inputAmount">
+									<div id="inputHelp" class="form-text">Price may vary according to market
+										cap.
+									</div>
+								</div>
+
+								<div class="row justify-content-center exchange-list">
+									<div class="col-sm-5 col-md-5 col-lg-5 mb-3 text-start dropdown" id="cryptoDropdown">
+										<div class="dropdown-selected" id="selectedCrypto">
+											<!-- <img id="crypto-icon" src="js/Icons/btc.svg" width="24" alt="Crypto Logo" />
+											<span class="select" id="crypto" aria-label="select">
+												Bitcoin (BTC)
+											</span> -->
+										</div>
+										<ul class="dropdown-options" id="cryptoOptions"></ul>
+									</div>
+
+									<div class="col-sm-2 col-md-2 col-lg-2 pb-3 icon2" id="swapButton">
+										<i class="fa-solid fa-right-left"></i>
+									</div>
+
+									<div class="col-sm-5 col-md-5 col-lg-5 mb-3 text-start dropdown" id="fiatDropdown">
+										<!-- <label for="inputCurrencyFrom" class="form-label" id="toCurrency">Fiat</label> -->
+										<div class="dropdown-selected" id="selectedFiat">
+											<!-- <img src="https://flagsapi.com/NG/flat/64.png" alt="flag">
+											<span class="select" id="fiat" aria-label="select">
+												Nigerian Naira (NGN)
+											</span> -->
+										</div>
+										<ul class="dropdown-options" id="fiatOptions"></ul>
+									</div>
+									<div class="result text-start my-3" id="result">1 BTC = 126,658,213.77 NGN</div>
+									<!-- <button class="btn btn-dark" type="button" id="convert">Convert</button>
+									  -->
+									<div class="col-sm-12">
+										<button type="submit" class="btn btn-dark mt-3">Convert</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</main>
-	<footer>
+
+
+	<footer class="footer">
 		<!-- place footer here -->
+		<div class="container footer-content">
+			<div class="row">
+				<div class="col-sm-6 col-md-3 col-lg-3 d-flex justify-content-center pt-3">
+					<img src="img/logo 2.svg" alt="" srcset="">
+				</div>
+				<div class="col-sm-6 col-md-3 col-lg-3  text-center pt-3">
+					<p><strong>Download</strong></p>
+					<p>IOS</p>
+					<P>Android</P>
+				</div>
+				<div class="col-sm-6 col-md-3 col-lg-3 text-center pt-3">
+					<p><strong>Resources</strong></p>
+					<p>Privacy Policy</p>
+					<P>Terms Of Use</P>
+				</div>
+				<div class="col-sm-6 col-md-3 col-lg-3 text-center pt-3">
+					<p><strong>Follow Us</strong></p>
+					<i class="fa-brands fa-x-twitter fa-lg px-1"></i>
+					<i class="fa-brands fa-facebook-f fa-lg px-1"></i>
+					<i class="fa-brands fa-instagram fa-lg px-1"></i>
+				</div>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<div class="col-12 text-center py-3">
+				<span>Igbigi ©
+					<script>document.write(new Date().getFullYear());</script> All Rights Reserved.
+				</span>
+			</div>
+		</div>
 	</footer>
+	<script src="js/country-list.js"></script>
+	<script src="js/script.js"></script>
+	<script src="js/crypto-list.js"></script>
+	<!-- <script src="js/index2.js"></script> -->
+
 	<!-- Bootstrap JavaScript Libraries -->
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
 		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

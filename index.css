@@ -1,5 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
+}
+
+body {
+	background-color: black;
+	font-size: 1rem;
+	overflow: auto;
+}
+
+nav ul {
+	color: #fff;
+	display: flex;
+	justify-content: end;
+	list-style: none;
+}
+
+
+.nav-link {
+	color: white;
+	text-decoration: none;
+}
+
+.background {
+	width: 340px;
+	height: 630px;
+	background: #daddde;
+	margin: auto;
+	border-radius: 10px;
+	padding: 10px;
+}
+
+#converter-tablet {
+	margin-top: 20px;
+}
+
+
+.select {
+	outline: none;
+	border: none;
+	background: #daddde;
+}
+
+.select-box {
+	display: flex;
+	height: 40px;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid #999;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.select-box select {
+	width: auto;
+	font-size: 13px;
+	margin: 0 -5px 0 5px;
+
+}
+
+.select-box img {
+	max-width: 30px;
+}
+
+/* Crypto select box */
+.dropdown {
+	position: relative;
+	width: 100%;
+}
+
+.dropdown-selected {
+	display: flex;
+	height: 40px;
+	/* padding: 25px; */
+	align-items: center;
+	justify-content: center;
+	border: 1px solid #999;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.dropdown-selected img {
+	max-width: 30px;
+	margin-right: 10px;
+}
+
+.dropdown-options {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: 0;
+	max-height: 200px;
+	max-width: fit-content;
+	overflow-y: auto;
+	background: #fff;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	display: none;
+	z-index: 1;
+}
+
+.dropdown-options li {
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	cursor: pointer;
+}
+
+.dropdown-options li:hover {
+	background: #f0f0f0;
+}
+
+.dropdown-options img {
+	width: 60px;
+	margin-right: 10px;
+	display: none
+}
+
+button {
+	width: 300px;
+}
+
+#nav-fiat-tab {
+	width: 80px;
+}
+
+#nav-crypto-tab,
+#nav-fiat-tab {
+	text-decoration: none;
+	color: black;
+	border-color: black;
+	border-bottom: 0;
+	margin-bottom: .1px;
+	cursor: pointer;
+	/* Changes cursor to pointer to indicate clickable text */
+}
+
+/* .nav-tabs .nav-link.active {
+	background-color: black;
+	color: white;
+} */
+
+#nav-crypto-tab:hover {
+	background-color: black;
+	color: white;
+}
+
+#nav-fiat-tab:hover {
+	background-color: black;
+	color: white;
+}
+
+/* .header-h2 {
+	font-size: 1.2rem;
+	font-weight: 600;
+	color: red;
+} */
+.footer {
+	background-color: #f4f6f7;
+	margin-top: 110px;
+	padding-top: 3rem;
+}
+
+footer .footer-content {
+	padding: 20px;
+}
+
+.footer-bottom {
+	background: black;
+	color: #999;
+	margin-top: 90px;
+	font-size: 0.8rem;
+	width: 100%;
+	overflow: auto;
+}
+
+@media screen and (min-width: 600px) {
+
+	.pt-7 {
+		padding-top: 40px;
+	}
+
+	.icon2 {
+		padding-top: 10px;
+
+	}
+
+	.background {
+		width: 470px;
+		height: 520px;
+	}
+
+	.select-box {
+		width: 170px;
+	}
+
+	footer img {
+		/* margin: auto; */
+
+		display: flex;
+		justify-content: start;
+		/* background-color: red; */
+	}
 }
