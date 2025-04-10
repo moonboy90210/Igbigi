@@ -28,7 +28,7 @@ nav ul {
 
 .background {
 	width: 340px;
-	height: 630px;
+	height: 650px;
 	background: #daddde;
 	margin: auto;
 	border-radius: 10px;
@@ -70,23 +70,24 @@ nav ul {
 /* Crypto select box */
 .dropdown {
 	position: relative;
-	width: 100%;
+	/* width: 50%; */
 }
 
 .dropdown-selected {
 	display: flex;
 	height: 40px;
-	/* padding: 25px; */
 	align-items: center;
 	justify-content: center;
 	border: 1px solid #999;
 	border-radius: 5px;
 	cursor: pointer;
+	
 }
 
 .dropdown-selected img {
-	max-width: 30px;
-	margin-right: 10px;
+	max-width: 20px;
+	margin-right: 5px;
+	
 }
 
 .dropdown-options {
@@ -116,7 +117,7 @@ nav ul {
 }
 
 .dropdown-options img {
-	width: 60px;
+	width: 20px;
 	margin-right: 10px;
 	display: none
 }
@@ -185,18 +186,28 @@ footer .footer-content {
 		padding-top: 40px;
 	}
 
-	.icon2 {
-		padding-top: 10px;
-
+	#swapButton {
+		margin-left: 15px;
+		margin-right: 0px;
+		padding-right: 0px;
 	}
 
 	.background {
-		width: 470px;
+		width: 500px;
 		height: 520px;
 	}
 
+	.to {
+		padding-left: 25px;
+	}
+
 	.select-box {
-		width: 170px;
+		width: 162px;
+	}
+
+	.dropdown-selected {
+		width: 202px;
+		font-size: 15px;
 	}
 
 	footer img {

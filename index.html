@@ -121,14 +121,15 @@
 								<div class="mt-2 mb-3 text-start">
 									<label for="inputAmount" class="form-label">Enter Amount</label>
 									<input type="text" class="form-control" id="inputAmount"
-										aria-describedby="inputAmount">
+										aria-describedby="inputAmount" placeholder="1">
 									<div id="inputHelp" class="form-text">Price may vary according to market
 										cap.
 									</div>
 								</div>
 
-								<div class="row justify-content-center exchange-list">
-									<div class="col-sm-5 col-md-5 col-lg-5 mb-3 text-start dropdown" id="cryptoDropdown">
+								<div class="row exchange-list">
+									<div class=" col-sm-5 col-md-5 col-lg-5 mb-3 text-start dropdown" id="cryptoDropdown">
+										<label for="inputCurrencyFrom" class="form-label">From</label>
 										<div class="dropdown-selected" id="selectedCrypto">
 											<!-- <img id="crypto-icon" src="js/Icons/btc.svg" width="24" alt="Crypto Logo" />
 											<span class="select" id="crypto" aria-label="select">
@@ -138,12 +139,12 @@
 										<ul class="dropdown-options" id="cryptoOptions"></ul>
 									</div>
 
-									<div class="col-sm-2 col-md-2 col-lg-2 pb-3 icon2" id="swapButton">
+									<div class="col-sm-2 col-md-2 col-lg-1 pt-7" id="swapButton">
 										<i class="fa-solid fa-right-left"></i>
 									</div>
 
 									<div class="col-sm-5 col-md-5 col-lg-5 mb-3 text-start dropdown" id="fiatDropdown">
-										<!-- <label for="inputCurrencyFrom" class="form-label" id="toCurrency">Fiat</label> -->
+										<label for="inputCurrencyFrom" class="form-label">To</label>
 										<div class="dropdown-selected" id="selectedFiat">
 											<!-- <img src="https://flagsapi.com/NG/flat/64.png" alt="flag">
 											<span class="select" id="fiat" aria-label="select">
