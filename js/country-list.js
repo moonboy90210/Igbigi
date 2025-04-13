@@ -191,7 +191,7 @@ const crypto_list = {
 
 const fiat_list = {
   USD: "US Dollar",
-  EUR: "Euro",
+  EUR: "European Euro",
   GBP: "British Pound",
   JPY: "Japanese Yen",
   NGN: "Nigerian Naira",

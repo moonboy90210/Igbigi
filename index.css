@@ -11,6 +11,7 @@ body {
 	background-color: black;
 	font-size: 1rem;
 	overflow: auto;
+	height: 100px;
 }
 
 nav ul {
@@ -67,10 +68,14 @@ nav ul {
 	max-width: 30px;
 }
 
+.icon{
+	width: max-content;
+}
+
+
 /* Crypto select box */
 .dropdown {
-	position: relative;
-	/* width: 50%; */
+	position:relative;
 }
 
 .dropdown-selected {
@@ -87,7 +92,6 @@ nav ul {
 .dropdown-selected img {
 	max-width: 20px;
 	margin-right: 5px;
-	
 }
 
 .dropdown-options {
@@ -118,7 +122,7 @@ nav ul {
 
 .dropdown-options img {
 	width: 20px;
-	margin-right: 10px;
+	margin-right: 5px;
 	display: none
 }
 
@@ -156,11 +160,7 @@ button {
 	color: white;
 }
 
-/* .header-h2 {
-	font-size: 1.2rem;
-	font-weight: 600;
-	color: red;
-} */
+
 .footer {
 	background-color: #f4f6f7;
 	margin-top: 110px;
@@ -179,6 +179,11 @@ footer .footer-content {
 	width: 100%;
 	overflow: auto;
 }
+@media screen and (max-width:599px) {
+	.dropdown{
+		width: 100%;
+	}
+} 
 
 @media screen and (min-width: 600px) {
 
@@ -186,35 +191,18 @@ footer .footer-content {
 		padding-top: 40px;
 	}
 
-	#swapButton {
-		margin-left: 15px;
-		margin-right: 0px;
-		padding-right: 0px;
-	}
-
 	.background {
 		width: 500px;
 		height: 520px;
 	}
 
-	.to {
-		padding-left: 25px;
-	}
-
-	.select-box {
-		width: 162px;
-	}
-
 	.dropdown-selected {
-		width: 202px;
-		font-size: 15px;
+		/* width: 205px; */
+		font-size: 12px;
 	}
 
 	footer img {
-		/* margin: auto; */
-
 		display: flex;
 		justify-content: start;
-		/* background-color: red; */
 	}
 }

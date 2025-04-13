@@ -64,11 +64,9 @@
 									<div class="col-md-12">
 										<div class="mt-2 mb-3 text-start amount">
 											<label for="inputAmount" class="form-label">Enter Amount</label>
-											<input type="text" class="form-control" id="inputAmount"
-												aria-describedby="inputAmount">
-											<div id="inputHelp" class="form-text">Price may vary according to market
-												cap.
-											</div>
+											<input type="text" class="form-control" id="inputAmount" aria-describedby="inputAmount">
+											<span class="form-text">Price may vary according to market cap.
+											</span>
 										</div>
 									</div>
 								</div>
@@ -83,7 +81,7 @@
 										</div>
 									</div>
 
-									<div class="col-sm-2 col-md-2 col-lg-2 pt-7 icon">
+									<div class="col-sm-2 col-md-2 col-lg-2 pt-7 mx-3 icon">
 										<i class="fa-solid fa-right-left"></i>
 									</div>
 
@@ -114,22 +112,21 @@
 						tabindex="0">
 						<div class="container">
 							<form action="#">
-								<!-- <div class="text-start py-3">
-									<small>* Enter any crypto amount to Convert </small>
-								</div> -->
-
-								<div class="mt-2 mb-3 text-start">
-									<label for="inputAmount" class="form-label">Enter Amount</label>
-									<input type="text" class="form-control" id="inputAmount"
-										aria-describedby="inputAmount" placeholder="1">
-									<div id="inputHelp" class="form-text">Price may vary according to market
-										cap.
+								<div class="row">
+									<div class="col-md-12">
+										<div class="mt-2 mb-3 text-start">
+											<label for="amountInput" class="form-label">Enter Amount</label>
+											<input type="number" id="amountInput" value="1" min="0" class="form-control" placeholder="Enter amount" />
+											<div class="form-text">Price may vary according to market cap.
+											</div>
+										</div>
 									</div>
 								</div>
 
-								<div class="row exchange-list">
-									<div class=" col-sm-5 col-md-5 col-lg-5 mb-3 text-start dropdown" id="cryptoDropdown">
-										<label for="inputCurrencyFrom" class="form-label">From</label>
+								<div class="row justify-content-center exchange-list">
+									<div class="col-sm-5 col-md-5 col-lg-5 mb-3 text-start dropdown"
+										id="cryptoDropdown">
+										<label for="selectedCrypto" class="form-label">From</label>
 										<div class="dropdown-selected" id="selectedCrypto">
 											<!-- <img id="crypto-icon" src="js/Icons/btc.svg" width="24" alt="Crypto Logo" />
 											<span class="select" id="crypto" aria-label="select">
@@ -139,12 +136,12 @@
 										<ul class="dropdown-options" id="cryptoOptions"></ul>
 									</div>
 
-									<div class="col-sm-2 col-md-2 col-lg-1 pt-7" id="swapButton">
-										<i class="fa-solid fa-right-left"></i>
+									<div class="col-sm-2 col-md-2 col-lg-2 mx-3 pt-7 icon" id="swapButton">
+										<i class="fa-solid fa-right-left "></i>
 									</div>
 
 									<div class="col-sm-5 col-md-5 col-lg-5 mb-3 text-start dropdown" id="fiatDropdown">
-										<label for="inputCurrencyFrom" class="form-label">To</label>
+										<label for="selectedFiat" class="form-label">To</label>
 										<div class="dropdown-selected" id="selectedFiat">
 											<!-- <img src="https://flagsapi.com/NG/flat/64.png" alt="flag">
 											<span class="select" id="fiat" aria-label="select">
@@ -153,13 +150,16 @@
 										</div>
 										<ul class="dropdown-options" id="fiatOptions"></ul>
 									</div>
-									<div class="result text-start my-3" id="result">1 BTC = 126,658,213.77 NGN</div>
+								</div>
+								<div class="row">
+									<div class="result text-start my-3" id="displayRate">1 BTC = 126,658,213.77 NGN</div>
 									<!-- <button class="btn btn-dark" type="button" id="convert">Convert</button>
 									  -->
 									<div class="col-sm-12">
-										<button type="submit" class="btn btn-dark mt-3">Convert</button>
+										<button type="button" class="btn btn-dark mt-3" id="convertBtn">Convert</button>
 									</div>
 								</div>
+
 							</form>
 						</div>
 					</div>
@@ -174,7 +174,7 @@
 		<div class="container footer-content">
 			<div class="row">
 				<div class="col-sm-6 col-md-3 col-lg-3 d-flex justify-content-center pt-3">
-					<img src="img/logo 2.svg" alt="" srcset="">
+					<img src="img/logo 2.svg" alt="Igbigi Logo" srcset="logo 2.svg 348w" >
 				</div>
 				<div class="col-sm-6 col-md-3 col-lg-3  text-center pt-3">
 					<p><strong>Download</strong></p>
@@ -205,6 +205,8 @@
 	<script src="js/country-list.js"></script>
 	<script src="js/script.js"></script>
 	<script src="js/crypto-list.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 	<!-- <script src="js/index2.js"></script> -->
 
 	<!-- Bootstrap JavaScript Libraries -->
