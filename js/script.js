@@ -3,7 +3,7 @@ const dropList = document.querySelectorAll(".drop-list select"),
   fromCurrency = document.querySelector(".from select"),
   toCurrency = document.querySelector(".to select"),
   getButton = document.querySelector("form button");
-const apiKey = `4d4a35ea1c4cf3340fef4505`;
+const apiKey = `16c698e371e08a9f741d2cf4`;
 
 for (let i = 0; i < dropList.length; i++) {
   for (currency_code in country_code) {
@@ -21,6 +21,7 @@ for (let i = 0; i < dropList.length; i++) {
   }
   dropList[i].addEventListener("change", (e) => {
     loadFlag(e.target); // calling loadFlag with passing target element as an argument
+	getExchangeRate();
   });
 }
 function loadFlag(element) {
@@ -69,10 +70,10 @@ function getExchangeRate() {
     amount.value = "1";
     amountVal = amount.value;
   }
-  exchangeRateTxt.innerText = "1 USD = 1,580.000 NGN";
+  exchangeRateTxt.innerText = "Getting exchange rate...";
 
   // DO NOT FORGET TO UNCOMMENT THE API FOR GETTING ECHANGE RATE
-  // let url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/${fromCurrency.value}`;
+  let url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/${fromCurrency.value}`;
   //fetching api response and returning it with parsing into js obj and in another then method receiving that obj
   fetch(url)
     .then((response) => response.json())
@@ -128,6 +129,7 @@ function populateDropdown(dropdownId, list, isCrypto = false, selectedCode = nul
 
     options.appendChild(li);
   }
+  
 
 	// Set selection (either from passed code or default first)
 	const firstCode = selectedCode || Object.keys(list)[0];
@@ -179,242 +181,61 @@ document.getElementById("swapButton").addEventListener("click", () => {
 
 // GET CONVERSION RATE
 
-const apiKeyy = '4b9a67ec-0803-4010-8b56-053b9ced9857';
+const apiKeyy = '76006839-3481-404c-89e9-d2e7688988c5';
 
-
-document.getElementById("convertBtn").addEventListener("click", convertRate); 
-
-function convertRate () {
-	const cryptoText = document.querySelector("#cryptoDropdown .dropdown-selected").innerText;
-	const fiatText = document.querySelector("#fiatDropdown .dropdown-selected").innerText;
-	const amount = parseFloat(document.getElementById("amountInput").value) || 1; // Get user input amount (default to 1 if empty)
-
-	const cryptoCode = extractCurrencyCode(cryptoText);
-	const fiatCode = extractCurrencyCode(fiatText);
-	
-	if (!cryptoCode || !fiatCode) {
-		document.getElementById("displayRate").textContent = "Please select valid currencies.";
-		return;
-	  }
- // Send the amount to SERVER backend
- fetch(`http://localhost:3000/api/convert?amount=${amount}&symbol=${cryptoCode}&convert=${fiatCode}`,  {
-		method: 'GET',
-		headers: {
-		  'X-CMC_PRO_API_KEY': apiKeyy
-		}
-	  })
-
-	//   NEW EDIT FOR USING PROXY SERVER
-	.then(res => res.json())
-	.then(data => {
-		// Check the response structure to avoid issues
-		if (data.success) {
-			const convertedAmount = data.result.amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-			document.getElementById("displayRate").textContent = `${amount} ${cryptoCode} = ${convertedAmount} ${fiatCode}`;
-		  } else {
-			document.getElementById("displayRate").textContent = data.message || "Error fetching conversion rate.";
-		  }
-		})
-	//   ORIGINAL SYNTAX FOR RUNNING API DIRECT TO SERVER
-	// .then(res => {
-	// 	if (!res.ok) {
-	// 	  throw new Error(`HTTP error! Status: ${res.status}`);
-	// 	}
-	// 	return res.json();
-	//   })
-	//   .then(data => {
-	// 	console.log("API Response:", data); // Log the full response to inspect
-	// 	const quote = data?.data?.quote?.[fiatCode];
-	// 	if (!quote) {
-	// 	  throw new Error("Conversion rate not found.");
-	// 	}
+// Trigger default conversion on page load
+window.addEventListener("DOMContentLoaded", () => {
+	convertRate(true); // Pass a flag to indicate default behavior
+  });
   
-	// 	const convertedPrice = quote.price.toLocaleString(undefined, {
-	// 		minimumFractionDigits: 2,
-	// 		maximumFractionDigits: 2
-	// 	  });
+  // Listen to currency dropdown changes (if dynamically updated)
+  document.querySelector("#cryptoDropdown").addEventListener("click", () => convertRate(true));
+  document.querySelector("#fiatDropdown").addEventListener("click", () => convertRate(true));
+  
 
-	// 	  document.getElementById("displayRate").textContent = `${amount} ${cryptoCode} = ${convertedPrice} ${fiatCode}`;
-	// })
-	.catch(err => {
-		document.getElementById("displayRate").textContent = "Error fetching conversion rate.";
-		console.error("API error:", err);
-	  });
+document.getElementById("convertBtn").addEventListener("click", convertRate);
+
+function convertRate() {
+  const cryptoText = document.querySelector("#cryptoDropdown .dropdown-selected").innerText;
+  const fiatText = document.querySelector("#fiatDropdown .dropdown-selected").innerText;
+  const amountInput = document.getElementById("amountInput").value.trim();
+  const amount = parseFloat(amountInput) || 0;
+
+  const cryptoCode = extractCurrencyCode(cryptoText);
+  const fiatCode = extractCurrencyCode(fiatText);
+
+  if (!cryptoCode || !fiatCode) {
+    document.getElementById("displayRate").textContent = "Please select valid currencies.";
+    return;
+  }
+
+  // Display placeholder while loading
+  document.getElementById("displayRate").textContent = `Converting ${amount} ${cryptoCode}...`;
+
+  fetch(`http://localhost:3000/api/convert?amount=${amount}&symbol=${cryptoCode}&convert=${fiatCode}`, {
+    method: 'GET',
+    headers: {
+      'X-CMC_PRO_API_KEY': apiKeyy
+    }
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+		const convertedAmount = parseFloat(data.result.amount).toLocaleString(undefined, {
+			minimumFractionDigits: 2,
+			maximumFractionDigits: 2
+		  });
+  
+
+        // ✅ Display only the final amount without extra multiplication
+        document.getElementById("displayRate").textContent =
+          `${amount} ${cryptoCode} = ${convertedAmount} ${fiatCode}`;
+      } else {
+        document.getElementById("displayRate").textContent = data.message || "Error fetching conversion rate.";
+      }
+    })
+    .catch(err => {
+      document.getElementById("displayRate").textContent = "Error fetching conversion rate.";
+      console.error("API error:", err);
+    });
 }
-
-  
-
-
-
-//   async function fetchConversionRate(base, quote) {
-// 	try {
-// 	  const res = await fetch(`https://api.exchangerate.host/latest?base=${base}&symbols=${quote}`);
-// 	  const data = await res.json();
-// 	  const rate = data.rates[quote];
-// 	  if (rate) {
-// 		document.getElementById("displayRate").textContent = `1 ${base} = ${rate.toFixed(2)} ${quote}`;
-// 	  }
-// 	} catch (err) {
-// 	  document.getElementById("displayRate").textContent = "Rate unavailable.";
-// 	  console.error("Error fetching rate:", err);
-// 	}
-//   }
-
-// //crypto to fiat exchange icon
-// let isCryptoToFiat = true; // current mode
-
-// // Load dropdowns initially
-// populateDropdown(cryptoCurrency, crypto_list, "BTC", true);
-// populateDropdown(fiatCurrency, country_code, "NGN", false);
-
-// // ==========================
-// // Populate Dropdown Function
-// // ==========================
-
-// // rebuild Dropdowns
-// function populateDropdown(selectEl, data, selectedCode, isCrypto) {
-//   selectEl.innerHTML = ""; // clear old options
-//   for (let code in data) {
-//     const isSelected = code === selectedCode ? "selected" : "";
-//     const name = data[code];
-// 	 const iconSrc = isCrypto
-//       ? `js/icons/${code.toLowerCase()}.svg`
-//       : getFlagEmoji(code);
-
-// 	  const option = document.createElement("option");
-// 	  option.value = code;
-// 	  option.selected = code === selectedCode;
-
-// 	  if (isCrypto) {
-// 		option.innerHTML = `<img src="${iconSrc}" class="dropdown-icon"> ${name} (${code})`;
-// 	  } else {
-// 		option.textContent = `${iconSrc} ${name} (${code})`;
-// 	  }
-
-// 	  selectEl.appendChild(option);
-// 	}
-
-// 	if (isCrypto) loadCryptoIcon(selectEl);
-//   }
-
-// ---------------------------------------------------------------neeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee----------------------------
-
-// function getFlagEmoji(code) {
-// 	const countryCode = loadFlag[code];
-// 	if (!countryCode) return "";
-// 	return countryCode.replace(/./g, char =>
-// 	  String.fromCodePoint(char.charCodeAt(0) + 127397)
-// 	);
-//   }
-
-// //   ------------------------------------alternative syntax to display icon
-
-// // function getFlagEmoji(code) {
-// //     const cc = countryCodeMap[code];
-// //     if (!cc) return "";
-// //     return cc.replace(/./g, c => String.fromCodePoint(c.charCodeAt(0) + 127397));
-// //   }
-
-// //   function createSelectedItem(container, label, iconSrc, isCrypto) {
-// //     container.innerHTML = "";
-// //     if (isCrypto) {
-// //       const img = document.createElement("img");
-// //       img.src = iconSrc;
-// //       img.alt = label;
-// //       container.appendChild(img);
-// //     }
-// //     const span = document.createElement("span");
-// //     span.textContent = label;
-// //     container.appendChild(span);
-// //   }
-// //   ------------------------------------
-
-//   function initDropdown(dropdownId, list, isCrypto = false) {
-// 	const dropdown = document.getElementById(dropdownId);
-// 	const selected = dropdown.querySelector(".dropdown-selected");
-// 	const options = dropdown.querySelector(".dropdown-options");
-
-// 	options.innerHTML = "";
-// // --------------------------------------------------------alternative syntax to display icon
-
-// // for (let code in list) {
-// // 	const li = document.createElement("li");
-// // 	if (isCrypto) {
-// // 	  const img = document.createElement("img");
-// // 	  img.src = `js/icons/${code.toLowerCase()}.svg`;
-// // 	  img.alt = code;
-// // 	  const span = document.createElement("span");
-// // 	  span.textContent = `${list[code]} (${code})`;
-// // 	  li.appendChild(img);
-// // 	  li.appendChild(span);
-// // 	} else {
-// // 	  const span = document.createElement("span");
-// // 	  span.textContent = `${getFlagEmoji(code)} ${list[code]} (${code})`;
-// // 	  li.appendChild(span);
-// // 	}
-
-// // 	li.addEventListener("click", () => {
-// // 	  const label = `${list[code]} (${code})`;
-// // 	  const iconSrc = isCrypto ? `js/icons/${code.toLowerCase()}.svg` : null;
-// // 	  createSelectedItem(selected, isCrypto ? label : `${getFlagEmoji(code)} ${label}`, iconSrc, isCrypto);
-// // 	  options.style.display = "none";
-// // 	});
-
-// // 	options.appendChild(li);
-// //   }
-
-// //   selected.addEventListener("click", () => {
-// // 	options.style.display = options.style.display === "block" ? "none" : "block";
-// //   });
-
-// //   document.addEventListener("click", (e) => {
-// // 	if (!dropdown.contains(e.target)) {
-// // 	  options.style.display = "none";
-// // 	}
-// //   });
-
-// //   // Set default
-// //   const firstCode = Object.keys(list)[0];
-// //   const label = `${list[firstCode]} (${firstCode})`;
-// //   const iconSrc = isCrypto ? `/js/icons/${firstCode.toLowerCase()}.svg` : null;
-// //   createSelectedItem(selected, isCrypto ? label : `${getFlagEmoji(firstCode)} ${label}`, iconSrc, isCrypto);
-// // }
-
-// // ------------------------------------------------------
-// 	for (let code in list) {
-// 	  const li = document.createElement("li");
-// 	  li.innerHTML = isCrypto
-// 		? `<img src="js/icons/${code.toLowerCase()}.svg" alt="${code}" /><span>${list[code]} (${code})</span>`
-// 		: `<span>${getFlagEmoji(code)} ${list[code]} (${code})</span>`;
-
-// 	  li.addEventListener("click", () => {
-// 		selected.innerHTML = li.innerHTML;
-// 		options.style.display = "none";
-// 	  });
-
-// 	  options.appendChild(li);
-// 	}
-// 	selected.addEventListener("click", () => {
-//         options.style.display = options.style.display === "block" ? "none" : "block";
-//       });
-
-//       document.addEventListener("click", (e) => {
-//         if (!dropdown.contains(e.target)) {
-//           options.style.display = "none";
-//         }
-//       });
-//     }
-
-// 	// ------------------------------------------------------------------
-// 	// Initialize both dropdowns
-//     initDropdown("cryptoDropdown", crypto_list, true);
-//     initDropdown("fiatDropdown", fiat_list, false);
-
-//   // Swap logic
-//   document.getElementById("swapButton").addEventListener("click", () => {
-// 	const cryptoSelected = document.getElementById("selectedCrypto").innerHTML;
-// 	const fiatSelected = document.getElementById("selectedFiat").innerHTML;
-
-// 	document.getElementById("selectedCrypto").innerHTML = fiatSelected;
-// 	document.getElementById("selectedFiat").innerHTML = cryptoSelected;
-//   });

@@ -7,7 +7,7 @@ const app = express();
 const port = 3000; // Port to run the server
 
 // Define your API key here
-const apiKeyy = '4b9a67ec-0803-4010-8b56-053b9ced9857'; // Replace with your actual CoinMarketCap API key
+const apiKeyy = '76006839-3481-404c-89e9-d2e7688988c5'; // Replace with your actual CoinMarketCap API key
 
 // Enable CORS for all origins
 app.use(cors());
@@ -22,38 +22,30 @@ app.get('/api/convert', async (req, res) => {
   }
 
   try {
-        // Log to check the value of amount
-        console.log('Amount:', amount);
-        
-    // Make the API request to CoinMarketCap
-    const response = await axios.get(`https://pro-api.coinmarketcap.com/v2/tools/price-conversion?amount=${amount}&symbol=${symbol}&convert=${convert}`, {
-      headers: {
-        'X-CMC_PRO_API_KEY': apiKeyy
-      }
-    });
+   const response = await axios.get(
+  'https://pro-api.coinmarketcap.com/v2/tools/price-conversion',
+  {
+    params: {
+      amount,       // ← this already applies the input amount directly
+      symbol,
+      convert
+    },
+    headers: {
+      'X-CMC_PRO_API_KEY': apiKeyy
+    }
+  }
+);
 
-    // Extract the conversion rate from the API response
-    const price = response.data.data[0].quote[convert].price;  // Price of 1 unit of 'symbol' in 'convert' currency
+const convertedAmount = response.data.data[0].quote[convert].price;
 
-  // Final converted amount:
-const convertedAmount = price;  // Already includes 'amount' from request
+res.json({
+  success: true,
+  result: {
+    amount: convertedAmount,  // Already the converted value for `amount` input
+    symbol: convert
+  }
+});
 
-      //   // Log the full response to inspect its structure
-        // console.log(response.data);
-
-      //  // Ensure that response has the expected structure
-      //  if (response.data.data && response.data.data[0] && response.data.data[0].quote[convert]) {
-      //   const convertedAmount = response.data.data[0].quote[convert].price * parseFloat(amount); // Make sure amount is a number
-  
-    // Send the result back to the client
-    res.json({
-      success: true,
-      message: `Converted ${amount} ${symbol} to ${convertedAmount} ${convert}`,
-      result: {
-        amount: convertedAmount,
-        symbol: convert
-      }
-    });
   } catch (error) {
     res.status(500).json({
       success: false,
