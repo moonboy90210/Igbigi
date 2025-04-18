@@ -7,7 +7,7 @@ const apiKey = `16c698e371e08a9f741d2cf4`;
 
 for (let i = 0; i < dropList.length; i++) {
   for (currency_code in country_code) {
-    //selecting USD by default as FROM currencey and NGN as TO currency
+    //selecting USD by default as FROM currency and NGN as TO currency
     let selected;
     if (i == 0) {
       selected = currency_code == "USD" ? "selected" : "";
@@ -65,7 +65,7 @@ function getExchangeRate() {
   const amount = document.querySelector(".amount input"),
     exchangeRateTxt = document.querySelector(".exchange-rate");
   let amountVal = amount.value;
-  //if user dont enter any value or enter 0 then we'll put 1 value by default in the input field
+  // placeholder if user enters no value or 0 
   if (amountVal == "" || amountVal == "0") {
     amount.value = "1";
     amountVal = amount.value;
@@ -74,7 +74,8 @@ function getExchangeRate() {
 
   // DO NOT FORGET TO UNCOMMENT THE API FOR GETTING ECHANGE RATE
   let url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/${fromCurrency.value}`;
-  //fetching api response and returning it with parsing into js obj and in another then method receiving that obj
+
+  //fetch API response 
   fetch(url)
     .then((response) => response.json())
     .then((result) => {
@@ -85,7 +86,7 @@ function getExchangeRate() {
     });
 }
 
-// ------------------------------------------------CRYPTO SECTION-----------------------------------------------------------------
+// ------------------------------------------------CRYPTO SECTION-----------------------------------------
 // Convert country code to flag emoji
 function getFlagEmoji(code) {
   const countryCode = countryCodeMap[code];
@@ -95,7 +96,7 @@ function getFlagEmoji(code) {
   );
 }
 
-// Extract currency code from a label like "Bitcoin (BTC)"
+// Extract currency code from a label, "Bitcoin (BTC)"
 function extractCurrencyCode(text) {
   const match = text.match(/\(([^)]+)\)/);
   return match ? match[1] : null;
@@ -129,7 +130,6 @@ function populateDropdown(dropdownId, list, isCrypto = false, selectedCode = nul
 
     options.appendChild(li);
   }
-  
 
 	// Set selection (either from passed code or default first)
 	const firstCode = selectedCode || Object.keys(list)[0];
@@ -167,12 +167,11 @@ document.getElementById("swapButton").addEventListener("click", () => {
   // Swap lists
   [currentCryptoList, currentFiatList] = [currentFiatList, currentCryptoList];
 
-  // Check if the new lists are crypto or fiat
+  // Check for new list is crypto or fiat
   const isCryptoNowCrypto = Object.keys(currentCryptoList).some(code => crypto_list.hasOwnProperty(code));
   const isCryptoNowFiat = !isCryptoNowCrypto;
 
   // Re-populate dropdowns with swapped content after repopulating
-  // Re-populate with correct types
   populateDropdown("cryptoDropdown", currentCryptoList, isCryptoNowCrypto, fiatCode);
   populateDropdown("fiatDropdown", currentFiatList, isCryptoNowFiat, cryptoCode);
 
@@ -180,7 +179,6 @@ document.getElementById("swapButton").addEventListener("click", () => {
 
 
 // GET CONVERSION RATE
-
 const apiKeyy = '76006839-3481-404c-89e9-d2e7688988c5';
 
 // Trigger default conversion on page load
@@ -191,7 +189,6 @@ window.addEventListener("DOMContentLoaded", () => {
   // Listen to currency dropdown changes (if dynamically updated)
   document.querySelector("#cryptoDropdown").addEventListener("click", () => convertRate(true));
   document.querySelector("#fiatDropdown").addEventListener("click", () => convertRate(true));
-  
 
 document.getElementById("convertBtn").addEventListener("click", convertRate);
 
@@ -209,7 +206,7 @@ function convertRate() {
     return;
   }
 
-  // Display placeholder while loading
+  // placeholder while fetching
   document.getElementById("displayRate").textContent = `Converting ${amount} ${cryptoCode}...`;
 
   fetch(`http://localhost:3000/api/convert?amount=${amount}&symbol=${cryptoCode}&convert=${fiatCode}`, {
@@ -221,15 +218,10 @@ function convertRate() {
     .then(res => res.json())
     .then(data => {
       if (data.success) {
-		const convertedAmount = parseFloat(data.result.amount).toLocaleString(undefined, {
-			minimumFractionDigits: 2,
-			maximumFractionDigits: 2
-		  });
-  
+		const convertedAmount = parseFloat(data.result.amount).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
-        // ✅ Display only the final amount without extra multiplication
-        document.getElementById("displayRate").textContent =
-          `${amount} ${cryptoCode} = ${convertedAmount} ${fiatCode}`;
+        //Display final amount 
+        document.getElementById("displayRate").textContent = `${amount} ${cryptoCode} = ${convertedAmount} ${fiatCode}`;
       } else {
         document.getElementById("displayRate").textContent = data.message || "Error fetching conversion rate.";
       }

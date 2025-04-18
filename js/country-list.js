@@ -227,30 +227,4 @@ const countryCodeMap = {
   AUD: "AU",
 };
 
-const emojiMap = {
-  BTC: "",
-  ETH: "",
-  LTC: "",
-  BNB: "",
-  XRP: "",
-  TON: "",
-  SUI: "",
-  SHIB: "",
-  ADA: "",
-  SOL: "",
-  DOT: "",
-  DOGE: "",
-  TRX: "",
-  AVAX: "",
-  MATIC: "",
-  XLM: "",
-  UNI: "",
-  LINK: "",
-  XMR: "",
-  ETC: "",
-  BCH: "",
-  ATOM: "",
-  APT: "",
-  FIL: "",
-  ICP: "",
-};
+

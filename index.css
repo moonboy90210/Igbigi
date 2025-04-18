@@ -40,7 +40,6 @@ nav ul {
 	margin-top: 20px;
 }
 
-
 .select {
 	outline: none;
 	border: none;
@@ -141,14 +140,9 @@ button {
 	border-color: black;
 	border-bottom: 0;
 	margin-bottom: .1px;
-	cursor: pointer;
 	/* Changes cursor to pointer to indicate clickable text */
+	cursor: pointer;
 }
-
-/* .nav-tabs .nav-link.active {
-	background-color: black;
-	color: white;
-} */
 
 #nav-crypto-tab:hover {
 	background-color: black;
