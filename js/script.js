@@ -179,17 +179,14 @@ document.getElementById("swapButton").addEventListener("click", () => {
 
 
 // GET CONVERSION RATE
-const apiKeyy = '76006839-3481-404c-89e9-d2e7688988c5';
+const apiBase = 'http://localhost/igbigi/api/convert.php';
 
 // Trigger default conversion on page load
-window.addEventListener("DOMContentLoaded", () => {
-	convertRate(true); // Pass a flag to indicate default behavior
-  });
-  
+  document.addEventListener("DOMContentLoaded", () => convertRate());
   // Listen to currency dropdown changes (if dynamically updated)
-  document.querySelector("#cryptoDropdown").addEventListener("click", () => convertRate(true));
-  document.querySelector("#fiatDropdown").addEventListener("click", () => convertRate(true));
 
+document.querySelector("#cryptoDropdown").addEventListener("click", () => convertRate());
+document.querySelector("#fiatDropdown").addEventListener("click", () => convertRate());
 document.getElementById("convertBtn").addEventListener("click", convertRate);
 
 function convertRate() {
@@ -205,25 +202,33 @@ function convertRate() {
     document.getElementById("displayRate").textContent = "Please select valid currencies.";
     return;
   }
+  // Validate amount input  
+    if (amount <= 0) {
+    document.getElementById("displayRate").textContent = "Enter a valid amount.";
+    return;
+  }
 
   // placeholder while fetching
   document.getElementById("displayRate").textContent = `Converting ${amount} ${cryptoCode}...`;
 
-  fetch(`http://localhost:3000/api/convert?amount=${amount}&symbol=${cryptoCode}&convert=${fiatCode}`, {
-    method: 'GET',
-    headers: {
-      'X-CMC_PRO_API_KEY': apiKeyy
-    }
-  })
+  // Construct API URL with query parameters
+ const url = `${apiBase}?amount=${amount}&symbol=${cryptoCode}&convert=${fiatCode}`;
+
+fetch(url)
     .then(res => res.json())
     .then(data => {
-      if (data.success) {
-		const convertedAmount = parseFloat(data.result.amount).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      try {
+        console.log("API Response:", data);
+        const convertedAmount = data.data[0].quote[fiatCode].price;
+        const formattedAmount = parseFloat(convertedAmount).toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
 
-        //Display final amount 
-        document.getElementById("displayRate").textContent = `${amount} ${cryptoCode} = ${convertedAmount} ${fiatCode}`;
-      } else {
-        document.getElementById("displayRate").textContent = data.message || "Error fetching conversion rate.";
+        document.getElementById("displayRate").textContent = `${amount} ${cryptoCode} = ${formattedAmount} ${fiatCode}`;
+      } catch (error) {
+        document.getElementById("displayRate").textContent = "Conversion failed. Check currency selection.";
+        console.error("Conversion error:", error);
       }
     })
     .catch(err => {
@@ -231,3 +236,37 @@ function convertRate() {
       console.error("API error:", err);
     });
 }
+
+
+//-------------------------- application for node.js backend server-----------------------------------------
+
+//  const url = `https://pro-api.coinmarketcap.com/v2/tools/price-conversion?amount=${amount}&symbol=${cryptoCode}&convert=${fiatCode}`;
+// fetch(url, {
+//     method: 'GET',
+//     headers: {
+//       'X-CMC_PRO_API_KEY': apiKeyy
+//     }
+//   })
+// -------
+//   fetch(`http://localhost:3000/api/convert?amount=${amount}&symbol=${cryptoCode}&convert=${fiatCode}`, {
+//     method: 'GET',
+//     headers: {
+//       'X-CMC_PRO_API_KEY': apiKeyy
+//     }
+//   })
+//     .then(res => res.json())
+//     .then(data => {
+//       if (data.success) {
+// 		const convertedAmount = parseFloat(data.result.amount).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+//         //Display final amount 
+//         document.getElementById("displayRate").textContent = `${amount} ${cryptoCode} = ${convertedAmount} ${fiatCode}`;
+//       } else {
+//         document.getElementById("displayRate").textContent = data.message || "Error fetching conversion rate.";
+//       }
+//     })
+//     .catch(err => {
+//       document.getElementById("displayRate").textContent = "Error fetching conversion rate.";
+//       console.error("API error:", err);
+//     });
+// }
